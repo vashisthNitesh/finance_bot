@@ -18,6 +18,7 @@ model User {
   name         String
   joinedAt     DateTime      @default(now())
   plan         String        @default("free")
+  language     String        @default("en") // en | id
   transactions Transaction[]
   sessions     Session[]
 }

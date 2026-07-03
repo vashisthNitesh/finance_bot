@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/lib/prisma';
 import { cookies } from 'next/headers';
-
-const prisma = new PrismaClient();
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -22,6 +20,11 @@ export async function GET(request: Request) {
   if (!session || session.expiresAt < new Date()) {
     return NextResponse.redirect(new URL('/?error=expired', baseUrl));
   }
+
+  // Opportunistically clear this user's expired sessions.
+  prisma.session.deleteMany({
+    where: { userId: session.userId, expiresAt: { lt: new Date() } },
+  }).catch(() => null);
 
   // Set HTTP-Only cookie
   const cookieStore = await cookies();
