@@ -6,12 +6,26 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "bot": "tsx scripts/bot.ts",
+    "dev:tunnel": "tsx scripts/dev_with_tunnel.ts"
   },
   "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "@types/localtunnel": "^2.0.4",
+    "@types/react-datepicker": "^6.2.0",
+    "clsx": "^2.1.1",
+    "dotenv": "^17.4.2",
+    "localtunnel": "^2.0.2",
+    "lucide-react": "^1.23.0",
     "next": "16.2.10",
+    "openai": "^6.45.0",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-datepicker": "^9.1.0",
+    "react-dom": "19.2.4",
+    "recharts": "^3.9.1",
+    "tailwind-merge": "^3.6.0",
+    "telegraf": "^4.16.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -20,7 +34,9 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
+    "prisma": "^5.22.0",
     "tailwindcss": "^4",
+    "tsx": "^4.22.5",
     "typescript": "^5"
   }
 }

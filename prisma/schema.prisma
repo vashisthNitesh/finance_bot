@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String        @id // Telegram ID
+  name         String
+  joinedAt     DateTime      @default(now())
+  plan         String        @default("free")
+  transactions Transaction[]
+  sessions     Session[]
+}
+
+model Transaction {
+  id            String   @id @default(uuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  amount        Float
+  currency      String   @default("IDR")
+  type          String   @default("pengeluaran") // pemasukan, pengeluaran
+  category      String
+  note          String?
+  store         String?
+  date          DateTime @default(now())
+  kodeTransaksi String   @unique
+  raw           String?
+  createdAt     DateTime @default(now())
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+}
